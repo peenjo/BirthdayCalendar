@@ -26,13 +26,14 @@ def generate_birthday_event(
         title += f" ({age})"
     event.add("summary", title)
     this_years_birthday = birthday_date.replace(year=date.today().year)
+    event.add("description", birthday_date)
     event.add("dtstart", this_years_birthday, parameters={"VALUE": "DATE"})
     event.add("rrule", {"freq": "yearly"})
     return event
 
 
 def convert(
-    input_vcf_file_path: str, output_ics_file_path: str, event_title: str = "Geburtstag"
+    input_vcf_file_path: str, output_ics_file_path: str, event_title: str = "BDay"
 ):
     """Converts a .vcf contacts file from Proton Mail to a birthday calendar
     .ics that can be imported into Proton Calendar.
@@ -41,7 +42,7 @@ def convert(
         input_vcf_file_path (str): Path to the contacts file.
         output_ics_file_path (str): Path to the output .ics file.
         event_title (str, optional): Text that will be added to the name in
-            the event title. Defaults to "Geburtstag".
+            the event title. Defaults to "BDay".
 
     Raises:
         Exception: If the date does not match expectations.
@@ -103,7 +104,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='Birthday Calendar Converter', description='Converts a .vcf contacts file from Proton Mail to a birthday calendar .ics that can be imported into Proton Calendar.')
     parser.add_argument('input', type=str, help='Path to the contacts (.vcf) file.')
     parser.add_argument('output', type=str, help='Path to the output (.ics) file.')
-    parser.add_argument('--title', type=str, help="Text that will be added to the name in the event title. Defaults to 'Geburtstag'.", default='Geburtstag')
+    parser.add_argument('--title', type=str, help="Text that will be added to the name in the event title. Defaults to 'BDay'.", default='BDay')
 
     args = parser.parse_args()
 
